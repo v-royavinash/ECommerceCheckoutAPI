@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceCheckout.Domain.Tests", "ECommerceCheckoutServices.Tests\ECommerceCheckout.Domain.Tests.csproj", "{E494A1DB-0896-4C08-B926-A8F20F87C7AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{42531FA7-9F03-498E-B678-28053C803B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42531FA7-9F03-498E-B678-28053C803B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42531FA7-9F03-498E-B678-28053C803B58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E494A1DB-0896-4C08-B926-A8F20F87C7AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E494A1DB-0896-4C08-B926-A8F20F87C7AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E494A1DB-0896-4C08-B926-A8F20F87C7AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E494A1DB-0896-4C08-B926-A8F20F87C7AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

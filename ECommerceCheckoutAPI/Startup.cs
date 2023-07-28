@@ -1,3 +1,5 @@
+using ECommerceCheckout.Domain;
+using ECommerceCheckout.Domain.Models;
 using ECommerceCheckout.Domain.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace ECommerceCheckoutAPI
 {
@@ -38,6 +41,8 @@ namespace ECommerceCheckoutAPI
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllers();
             services.AddScoped<ICheckoutService, CheckoutService>();
+            services.AddSingleton<IEnumerable<Watch>>(WatchCatalog.Watches);
+
         }
 
         /// <summary>
