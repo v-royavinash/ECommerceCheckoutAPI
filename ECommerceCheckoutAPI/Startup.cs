@@ -1,7 +1,9 @@
 using ECommerceCheckout.Domain;
 using ECommerceCheckout.Domain.Models;
 using ECommerceCheckout.Domain.Services;
+using ECommerceCheckoutAPI.Authentication;
 using Microsoft.AspNetCore.Authentication;
+using ECommerceCheckout.Utilities.Commons;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +45,12 @@ namespace ECommerceCheckoutAPI
             services.AddScoped<ICheckoutService, CheckoutService>();
             services.AddSingleton<IEnumerable<Watch>>(WatchCatalog.Watches);
 
+            string apiKey = Configuration.GetValue<string>("ApiKey");
+            services.AddAuthentication(Constants.ApiKeyAuthenticationScheme)
+                     .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(
+                         Constants.ApiKeyAuthenticationScheme,
+                         options => { options.ApiKey = apiKey; });
+
         }
 
         /// <summary>
@@ -58,6 +66,9 @@ namespace ECommerceCheckoutAPI
             }
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

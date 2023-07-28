@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using ECommerceCheckout.Domain.Services;
 using ECommerceCheckout.Utilities.Exceptions;
+using ECommerceCheckoutAPI.Authentication;
 using ECommerceCheckoutAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +15,8 @@ namespace ECommerceCheckoutAPI.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.ApiKeyAuthenticationScheme)]
+
     public class CheckoutController : ControllerBase
     {
         private readonly ICheckoutService _checkoutService;

@@ -2,5 +2,7 @@
 {
     public class Constants
     {
+        public const string ApiKeyAuthenticationScheme = "ApiKey";
+
     }
 }
