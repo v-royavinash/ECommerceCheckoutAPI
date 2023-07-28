@@ -24,8 +24,21 @@ namespace ECommerceCheckoutAPI.Controllers
         [ProducesResponseType(400)]
         public ActionResult<decimal> Post([FromBody] List<string> watchIds)
         {
-            // Implement the logic to calculate the total cost for a list of watches
-            return 360;
+            if (watchIds == null || watchIds.Count == 0)
+            {
+                return BadRequest("No watch IDs provided.");
+            }
+
+            try
+            {
+                decimal totalCost = _checkoutService.CalculateTotalCost(watchIds);
+                return Ok(new { total_cost = totalCost });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred during the checkout process.");
+                return StatusCode(500, "An unexpected error occurred during the checkout process.");
+            }
         }
     }
 }
