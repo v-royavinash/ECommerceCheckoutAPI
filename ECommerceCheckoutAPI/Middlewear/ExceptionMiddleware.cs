@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// Middleware to handle unhandled exceptions globally in the application.
+/// Custom middleware to handle unhandled exceptions globally in the application.
 /// </summary>
 public class ExceptionMiddleware
 {
@@ -28,8 +29,18 @@ public class ExceptionMiddleware
     /// <returns>A task that represents the asynchronous middleware operation.</returns>
     public async Task InvokeAsync(HttpContext context)
     {
-        // TODO: Implement the exception handling logic here.
+        try
+        {
+            await _next(context);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An unexpected error occurred.");
 
-        return;
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            await context.Response.WriteAsync("{\"message\":\"An unexpected error occurred.\"}");
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ECommerceCheckout.Domain.Models;
+using ECommerceCheckout.Utilities.Exceptions;
 
 namespace ECommerceCheckout.Domain.Services
 {
@@ -62,7 +63,7 @@ namespace ECommerceCheckout.Domain.Services
 
                 if (watch == null)
                 {
-                    throw new ArgumentNullException($"Watch with ID '{kvp.Key}' not found in the catalog.");
+                    throw new WatchNotFoundException($"Watch with ID '{kvp.Key}' not found in the catalog.");
                 }
 
                 totalCost += CalculateWatchCost(watch, kvp.Value);

@@ -1,7 +1,4 @@
-using ECommerceCheckout.Domain;
-using ECommerceCheckout.Domain.Models;
 using ECommerceCheckout.Domain.Services;
-using ECommerceCheckoutAPI.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
@@ -9,9 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
 
 namespace ECommerceCheckoutAPI
 {
