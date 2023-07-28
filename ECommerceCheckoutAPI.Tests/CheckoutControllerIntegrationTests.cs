@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using ECommerceCheckout.Domain.Models;
+﻿using System;
+using System.Collections.Generic;
 using ECommerceCheckout.Domain.Services;
+using ECommerceCheckout.Domain.Models;
 using ECommerceCheckout.Utilities.Exceptions;
 using ECommerceCheckoutAPI.Controllers;
 using ECommerceCheckoutAPI.Models;
@@ -15,71 +16,66 @@ namespace ECommerceCheckoutAPI.Tests
     [TestFixture]
     public class CheckoutControllerIntegrationTests
     {
+        private ICheckoutService _checkoutService;
+        private CheckoutController _controller;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _checkoutService = new CheckoutService(new List<Watch>
+        {
+            new Watch { WatchId = "001", UnitPrice = 100, DiscountQuantity = 3, DiscountPrice = 200 },
+            new Watch { WatchId = "002", UnitPrice = 150, DiscountQuantity = 2, DiscountPrice = 250 },
+        });
+
+            var loggerMock = new Mock<ILogger<CheckoutController>>();
+            _controller = new CheckoutController(_checkoutService, loggerMock.Object);
+        } 
         [Test]
         public void Post_ValidWatchIds_ReturnsTotalCost()
         {
-            var watchCatalog = new List<Watch>
-            {
-                new Watch { WatchId = "001", UnitPrice = 100, DiscountQuantity = 3, DiscountPrice = 200 }
-            };
+            var watchIds = new List<string> { "001", "001", "002", "001" };
+            var result = _controller.Post(watchIds);
 
-            var checkoutServiceMock = new Mock<ICheckoutService>();
-            checkoutServiceMock.Setup(service => service.CalculateTotalCost(It.IsAny<List<string>>()))
-                               .Returns<List<string>>((watchIds) =>
-                               {
-                                   if (watchIds.Contains("001"))
-                                       return 200;
-                                   return 0;
-                               });
-
-            var loggerMock = new Mock<ILogger<CheckoutController>>();
-            var controller = new CheckoutController(checkoutServiceMock.Object, loggerMock.Object);
-            var watchIds = new List<string> { "001", "001", "001" };
-            var result = controller.Post(watchIds);
-            var expectedResult = new WatchCatalogItem { TotalCost = 200 };
-            result.Result.Should().BeOfType<OkObjectResult>().Subject.Value.Should().BeEquivalentTo(expectedResult);
-        }
-
-        [Test]
-        public void Post_EmptyWatchIds_ReturnsBadRequest()
-        {
-            var checkoutServiceMock = new Mock<ICheckoutService>();
-            checkoutServiceMock.Setup(service => service.CalculateTotalCost(It.IsAny<List<string>>()))
-                               .Returns(0);
-
-            var loggerMock = new Mock<ILogger<CheckoutController>>();
-            var controller = new CheckoutController(checkoutServiceMock.Object, loggerMock.Object);
-            var watchIds = new List<string>();
-            var result = controller.Post(watchIds);
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
-        }
-
-        [Test]
-        public void Post_NullWatchIds_ReturnsBadRequest()
-        {
-            var checkoutServiceMock = new Mock<ICheckoutService>();
-            var loggerMock = new Mock<ILogger<CheckoutController>>();
-            var controller = new CheckoutController(checkoutServiceMock.Object, loggerMock.Object);
-            var result = controller.Post(null);
-            result.Result.Should().BeOfType<BadRequestObjectResult>().Subject.Value.Should().Be("No watch IDs provided.");
+            result.Result.Should().BeOfType<OkObjectResult>()
+                    .Which.Value.Should().BeOfType<WatchCatalogItem>()
+                    .Which.TotalCost.Should().Be(350);
         }
 
         [Test]
         public void Post_WatchNotFound_ReturnsNotFound()
         {
-            var watchCatalog = new List<Watch>
-            {
-                new Watch { WatchId = "001", UnitPrice = 100, DiscountQuantity = 3, DiscountPrice = 200 }
-            };
+            // Act
+            var watchIds = new List<string> { "001", "003" }; // Assuming watch ID "003" doesn't exist in the database.
+            var result = _controller.Post(watchIds);
 
-            var checkoutServiceMock = new Mock<ICheckoutService>();
-            checkoutServiceMock.Setup(service => service.CalculateTotalCost(It.IsAny<List<string>>()))
-                               .Throws(new WatchNotFoundException("Watch with ID '002' not found in the catalog."));
-            var loggerMock = new Mock<ILogger<CheckoutController>>();
-            var controller = new CheckoutController(checkoutServiceMock.Object, loggerMock.Object);
-            var watchIds = new List<string> { "001", "002" };
-            var result = controller.Post(watchIds);
-            result.Result.Should().BeOfType<NotFoundObjectResult>().Subject.Value.Should().Be("Watch with ID '002' not found in the catalog.");
+            // Assert
+            result.Result.Should().BeOfType<NotFoundObjectResult>().Subject.Value.Should().Be("Watch with ID '003' not found in the catalog.");
         }
+
+        [Test]
+        public void Post_EmptyWatchIds_ReturnsBadRequest()
+        {
+            var result = _controller.Post(new List<string>());
+            result.Result.Should().BeOfType<BadRequestObjectResult>().Subject.Value.Should().Be("No watch IDs provided.");
+        }
+
+        [Test]
+        public void Post_NullWatchIds_ReturnsBadRequest()
+        {
+            var result = _controller.Post(null);
+            result.Result.Should().BeOfType<BadRequestObjectResult>().Subject.Value.Should().Be("No watch IDs provided.");
+        }
+
+        [Test]
+        public void Post_WatchWithDiscount_ReturnsTotalCostWithDiscountApplied()
+        {
+            var watchIds = new List<string> { "001", "001", "001", "001", "001", "001", "001" };
+            var result = _controller.Post(watchIds);
+            result.Result.Should().BeOfType<OkObjectResult>()
+                    .Which.Value.Should().BeOfType<WatchCatalogItem>()
+                    .Which.TotalCost.Should().Be(500);
+        }
+
     }
 }
