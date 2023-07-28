@@ -21,7 +21,7 @@ namespace ECommerceCheckout.Utilities.Tests.Exceptions
         [Test]
         public void WatchNotFoundException_MessageConstructor()
         {
-            string errorMessage = "Watch not found in the catalog.";
+            var errorMessage = "Watch not found in the catalog.";
             WatchNotFoundException exception = new WatchNotFoundException(errorMessage);
             exception.Should().NotBeNull();
             exception.Should().BeOfType<WatchNotFoundException>();
@@ -32,7 +32,7 @@ namespace ECommerceCheckout.Utilities.Tests.Exceptions
         [Test]
         public void WatchNotFoundException_MessageAndInnerExceptionConstructor()
         {
-            string errorMessage = "Watch not found in the catalog.";
+            var errorMessage = "Watch not found in the catalog.";
             Exception innerException = new Exception("Inner exception message.");
             WatchNotFoundException exception = new WatchNotFoundException(errorMessage, innerException);
             exception.Should().BeOfType<WatchNotFoundException>();

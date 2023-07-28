@@ -13,7 +13,7 @@ namespace ECommerceCheckoutAPI.Controllers
     /// <summary>
     /// Controller to handle checkout actions.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/Checkout")]
     [ApiController]
     [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.ApiKeyAuthenticationScheme)]
 
@@ -52,7 +52,7 @@ namespace ECommerceCheckoutAPI.Controllers
 
             try
             {
-                decimal totalCost = _checkoutService.CalculateTotalCost(watchIds);
+                var totalCost = _checkoutService.CalculateTotalCost(watchIds);
                 return Ok( new WatchCatalogItem() { TotalCost = totalCost });
             }
             catch (WatchNotFoundException ex)
