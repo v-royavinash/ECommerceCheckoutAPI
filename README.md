@@ -76,7 +76,7 @@ Follow the steps below to set up and run the API:
 
 5. Run the API project by pressing F5 or selecting "Start Debugging" from the "Debug" menu.
 
-The API will be up and running at `https://localhost:44361/api/Checkout`.
+The API will be running at `https://localhost:44361/api/Checkout`.If you want to access it in your local environment, you should replace "44361" with the appropriate port number that you are using locally.
 
 ![User manual](./Wiki/Images/TestsCoverage.PNG)
 
