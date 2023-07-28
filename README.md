@@ -76,6 +76,8 @@ Follow the steps below to set up and run the API:
 
 The API will be up and running at `https://localhost:44361/api/Checkout`.
 
+![User manual](Wiki/Images/PostManAPI.gif)
+
 ## Swagger Documentation
 
 The API includes Swagger documentation for easy exploration of the endpoints. After running the API, you can access the Swagger UI by navigating to the following URL in your web browser:
