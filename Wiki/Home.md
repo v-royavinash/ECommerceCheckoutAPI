@@ -1,6 +1,4 @@
 # E-Commerce Checkout API
-[Documentation](https://github.com/v-royavinash/ECommerceCheckoutAPI/wiki#e-commerce-checkout-api) | [Release Notes](https://github.com/v-royavinash/ECommerceCheckoutAPI/wiki/Release-Notes#release-notes) | [Solution Overview](https://github.com/v-royavinash/ECommerceCheckoutAPI/wiki/Solution-Overview#overview)  | [Taking it further](https://github.com/v-royavinash/ECommerceCheckoutAPI/wiki/Taking-it-further)  | 
-| ---- | ---- | ---- |---- |
 
 ## Introduction
 
