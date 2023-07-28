@@ -21,6 +21,7 @@ The project is organized into the following components:
 
 Automated testing is an essential part of this API. The project contains unit and integration tests to ensure the correct functionality of the API.
 
+![Test Coverage](Wiki/Images/TestsCoverage.PNG)
 ## Improvements and Future Considerations
 
 - Implement a CI/CD pipeline for automated builds and deployments.
