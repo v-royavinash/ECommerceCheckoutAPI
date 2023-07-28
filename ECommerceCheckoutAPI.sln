@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceCheckout.Domain.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceCheckoutAPI.Tests", "ECommerceCheckoutAPI.Tests\ECommerceCheckoutAPI.Tests.csproj", "{E72BF745-D78A-4AEF-B6AE-B4A8BC7553CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceCheckout.Utilities.Tests", "ECommerceCheckout.Utilities.Tests\ECommerceCheckout.Utilities.Tests.csproj", "{AD0F432A-E36F-432D-A7A6-D5D44A41A958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{E72BF745-D78A-4AEF-B6AE-B4A8BC7553CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E72BF745-D78A-4AEF-B6AE-B4A8BC7553CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E72BF745-D78A-4AEF-B6AE-B4A8BC7553CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0F432A-E36F-432D-A7A6-D5D44A41A958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0F432A-E36F-432D-A7A6-D5D44A41A958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0F432A-E36F-432D-A7A6-D5D44A41A958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0F432A-E36F-432D-A7A6-D5D44A41A958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

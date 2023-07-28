@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ECommerceCheckoutAPI
 {
@@ -51,6 +53,50 @@ namespace ECommerceCheckoutAPI
                          Constants.ApiKeyAuthenticationScheme,
                          options => { options.ApiKey = apiKey; });
 
+            services.AddLogging(builder =>
+            {
+                builder.AddConsole();
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "ECommerce Checkout API",
+                    Version = "v1",
+                    Description = "API for handling checkout actions.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Avinash Roy",
+                        Email = "nashavi12@gmail.com",
+                        Url = new System.Uri("https://github.com/v-royavinash/ECommerceCheckoutAPI")
+                    }
+                });
+
+                c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.ApiKey,
+                    In = ParameterLocation.Header,
+                    Name = "ApiKey",
+                    Description = "API key needed to access the endpoints.",
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "ApiKey"
+                            },
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+
         }
 
         /// <summary>
@@ -75,6 +121,12 @@ namespace ECommerceCheckoutAPI
             });
 
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce Checkout API v1");
+            });
         }
     }
 }
