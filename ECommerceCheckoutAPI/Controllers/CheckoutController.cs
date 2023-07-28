@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ECommerceCheckout.Domain.Services;
 using ECommerceCheckout.Utilities.Exceptions;
+using ECommerceCheckoutAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -38,7 +39,7 @@ namespace ECommerceCheckoutAPI.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(decimal), 200)]
         [ProducesResponseType(400)]
-        public ActionResult<decimal> Post([FromBody] List<string> watchIds)
+        public ActionResult<WatchCatalogItem> Post([FromBody] List<string> watchIds)
         {
             if (watchIds == null || watchIds.Count == 0)
             {
@@ -48,7 +49,7 @@ namespace ECommerceCheckoutAPI.Controllers
             try
             {
                 decimal totalCost = _checkoutService.CalculateTotalCost(watchIds);
-                return Ok(new { total_cost = totalCost });
+                return Ok( new WatchCatalogItem() { TotalCost = totalCost });
             }
             catch (WatchNotFoundException ex)
             {
