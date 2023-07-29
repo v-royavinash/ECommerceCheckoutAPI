@@ -31,15 +31,10 @@ namespace ECommerceCheckoutAPI.Tests
 
         public void Post_WithValidWatchIds_ReturnsTotalCost()
         {
-            // Arrange
             List<string> watchIds = new List<string> { "watch1", "watch2", "watch3" };
             decimal expectedTotalCost = 150;
             _checkoutServiceMock.Setup(x => x.CalculateTotalCost(watchIds)).Returns(expectedTotalCost);
-
-            // Act
             ActionResult<WatchCatalogItem> result = _controller.Post(watchIds);
-
-            // Assert
             result.Result.Should().NotBeNull().And.BeOfType<OkObjectResult>();
             result.Result.Should().BeOfType<OkObjectResult>()
                 .Which.Value.Should().BeOfType<WatchCatalogItem>()

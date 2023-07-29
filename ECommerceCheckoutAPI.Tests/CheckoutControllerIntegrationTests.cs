@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using ECommerceCheckout.Domain.Services;
+﻿using System.Collections.Generic;
 using ECommerceCheckout.Domain.Models;
-using ECommerceCheckout.Utilities.Exceptions;
+using ECommerceCheckout.Domain.Services;
 using ECommerceCheckoutAPI.Controllers;
 using ECommerceCheckoutAPI.Models;
 using FluentAssertions;

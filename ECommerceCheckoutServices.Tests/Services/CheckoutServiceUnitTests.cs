@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using ECommerceCheckout.Domain.Models;
 using ECommerceCheckout.Domain.Services;
 using ECommerceCheckout.Utilities.Exceptions;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace ECommerceCheckout.Domain.Tests
 {
@@ -46,7 +46,6 @@ namespace ECommerceCheckout.Domain.Tests
         public void CalculateTotalCost_ValidWatchIds_CalculatesTotalCost()
         {
             List<string> watchIds = new List<string> { "watch1", "watch2", "watch2", "watch3", "watch3", "watch3" };
-            // Expected total cost: 100 + 80 (2 * watch2 discount) + 90 (3 * watch3, no discount) = 270
             decimal totalCost = _checkoutService.CalculateTotalCost(watchIds);
             totalCost.Should().Be(270);
         }
@@ -54,7 +53,7 @@ namespace ECommerceCheckout.Domain.Tests
         [Test]
         public void CalculateTotalCost_UnknownWatchId_ThrowsWatchNotFoundException()
         {
-            List<string> watchIds = new List<string> { "watch1", "watch4" }; // watch4 is not present in the mock watches
+            List<string> watchIds = new List<string> { "watch1", "watch4" };
             Action act = () => _checkoutService.CalculateTotalCost(watchIds);
             act.Should().Throw<WatchNotFoundException>();
         }
